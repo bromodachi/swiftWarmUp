@@ -17,13 +17,21 @@ class MasterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let urlString = "https://api.whitehouse.gov/v1/petitions.json?limit=100"
+        let urlString:String
+        
+        if navigationController?.tabBarItem.tag == 0 {
+            urlString  = "https://api.whitehouse.gov/v1/petitions.json?limit=100"
+        } else {
+            print("other string")
+            urlString = "https://api.whitehouse.gov/v1/petitions.json?signatureCountFloor=10000&limit=100"
+        }
         
         let url = NSURL(string: urlString)
         guard let data = try? NSData(contentsOfURL: url!, options: [])
         else {
             //handle error
             print("failure")
+            showError()
 
             return
         }
@@ -33,13 +41,23 @@ class MasterViewController: UITableViewController {
             //time to parse
             parseJSON(json)
         }
-        print("success")
+        else {
+            showError()
+        }
+        //print("success")
 
     }
     
+    func showError() {
+        let alertController = UIAlertController(title: "Error", message: "Error loading content", preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        presentViewController(alertController, animated:  true, completion: nil)
+    }
+    
+    
     func parseJSON (json: JSON){
         for result in json["results"].arrayValue {
-               print("success")
+            //   print("success")
             let title = result["title"].stringValue
             let body = result["body"].stringValue
             let sigs = result["signatureCount"].stringValue
