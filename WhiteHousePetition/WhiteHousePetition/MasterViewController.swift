@@ -25,33 +25,43 @@ class MasterViewController: UITableViewController {
             print("other string")
             urlString = "https://api.whitehouse.gov/v1/petitions.json?signatureCountFloor=10000&limit=100"
         }
+        /*
+        "User Initiated: Execute user related work. This should be executed first since the user is waiting. 
+        */
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)){ [unowned self] in //avoid strong reference cycles
+            let url = NSURL(string: urlString)
+            guard let data = try? NSData(contentsOfURL: url!, options: [])
+                else {
+                    //handle error
+                    print("failure")
+                    self.showError()
+                    
+                    return
+            }
+            let json = JSON(data: data)
+            print(json["metadata"]["responseInfo"]["status"].intValue)
+            if json["metadata"]["responseInfo"]["status"].intValue == 200 {
+                //time to parse
+                self.parseJSON(json)
+            }
+            else {
+                self.showError()
+            }
         
-        let url = NSURL(string: urlString)
-        guard let data = try? NSData(contentsOfURL: url!, options: [])
-        else {
-            //handle error
-            print("failure")
-            showError()
-
-            return
-        }
-        let json = JSON(data: data)
-        print(json["metadata"]["responseInfo"]["status"].intValue)
-        if json["metadata"]["responseInfo"]["status"].intValue == 200 {
-            //time to parse
-            parseJSON(json)
-        }
-        else {
-            showError()
+        
+        
         }
         //print("success")
 
     }
     
     func showError() {
-        let alertController = UIAlertController(title: "Error", message: "Error loading content", preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        presentViewController(alertController, animated:  true, completion: nil)
+        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+            let alertController = UIAlertController(title: "Error", message: "Error loading content", preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alertController, animated:  true, completion: nil)
+        
+        }
     }
     
     
@@ -64,7 +74,10 @@ class MasterViewController: UITableViewController {
             let obj = ["title": title, "body": body, "sigs": sigs]
             objects.append(obj)
         }
-        tableView.reloadData()
+        dispatch_async(dispatch_get_main_queue()){ [unowned self] in
+            self.tableView.reloadData()
+        }
+        
     }
 
     override func viewWillAppear(animated: Bool) {
