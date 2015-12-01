@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="guessTheFlag" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cZ4-py-Pkv">
+                                <rect key="frame" x="200" y="249" width="200" height="100"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cZ4-py-Pkv" secondAttribute="height" multiplier="2:1" id="xcR-65-jHG"/>
+                                </constraints>
+                                <state key="normal" image="us"/>
+                                <connections>
+                                    <action selector="answerQuestion:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ikE-Ro-ef6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pUX-Fb-u9q">
+                                <rect key="frame" x="200" y="411" width="200" height="100"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="pUX-Fb-u9q" secondAttribute="height" multiplier="2:1" id="0Py-Sk-hRL"/>
+                                </constraints>
+                                <state key="normal" image="us"/>
+                                <connections>
+                                    <action selector="answerQuestion:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Eea-Yy-hcB"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5D-Y4-bnH">
+                                <rect key="frame" x="200" y="46" width="200" height="21"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="eIJ-BO-bcs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzN-XM-7VV">
+                                <rect key="frame" x="200" y="103" width="200" height="100"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="wzN-XM-7VV" secondAttribute="height" multiplier="2:1" id="kpt-AN-jdx"/>
+                                </constraints>
+                                <state key="normal" image="us"/>
+                                <connections>
+                                    <action selector="answerQuestion:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tKf-4g-vZA"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cZ4-py-Pkv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0jl-mo-BBl"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="pUX-Fb-u9q" secondAttribute="bottom" constant="20" id="1yN-0C-cTw"/>
+                            <constraint firstItem="pUX-Fb-u9q" firstAttribute="centerX" secondItem="cZ4-py-Pkv" secondAttribute="centerX" id="2x6-RH-FVD"/>
+                            <constraint firstItem="cZ4-py-Pkv" firstAttribute="height" secondItem="wzN-XM-7VV" secondAttribute="height" id="9Ts-mf-bf3"/>
+                            <constraint firstItem="cZ4-py-Pkv" firstAttribute="top" secondItem="wzN-XM-7VV" secondAttribute="bottom" constant="46" id="A23-Rx-Iwd"/>
+                            <constraint firstItem="E5D-Y4-bnH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Bj3-7F-tiR"/>
+                            <constraint firstItem="wzN-XM-7VV" firstAttribute="top" secondItem="E5D-Y4-bnH" secondAttribute="bottom" constant="36" id="KEH-Hn-JW7"/>
+                            <constraint firstItem="pUX-Fb-u9q" firstAttribute="top" secondItem="cZ4-py-Pkv" secondAttribute="bottom" constant="62" id="MGD-dx-06N"/>
+                            <constraint firstItem="E5D-Y4-bnH" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="26" id="Oyq-3O-02v"/>
+                            <constraint firstItem="pUX-Fb-u9q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SyH-Oa-fbS"/>
+                            <constraint firstItem="wzN-XM-7VV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cQJ-xN-qpf"/>
+                            <constraint firstItem="cZ4-py-Pkv" firstAttribute="centerX" secondItem="wzN-XM-7VV" secondAttribute="centerX" id="jr9-pn-dgc"/>
+                            <constraint firstItem="wzN-XM-7VV" firstAttribute="centerX" secondItem="E5D-Y4-bnH" secondAttribute="centerX" id="nJ8-j2-YT6"/>
+                            <constraint firstItem="pUX-Fb-u9q" firstAttribute="height" secondItem="cZ4-py-Pkv" secondAttribute="height" id="vV0-av-dnQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="button1" destination="wzN-XM-7VV" id="L6k-b1-crT"/>
+                        <outlet property="button2" destination="cZ4-py-Pkv" id="Kve-jt-APh"/>
+                        <outlet property="button3" destination="pUX-Fb-u9q" id="66A-IZ-DJL"/>
+                        <outlet property="titleLabel" destination="E5D-Y4-bnH" id="pg8-oS-HsF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="288" y="274"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="us" width="200" height="100"/>
+    </resources>
+</document>
