@@ -12,12 +12,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     //UICollection needs this:
     //how many items of data it should expect and what each item should contain.
     var people = [Person]()
+    
+    var indexGlobal:NSIndexPath!
 
     @IBOutlet weak var collectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addNewPerson")
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let savedPeople = defaults.objectForKey("people") as? NSData {
+            people = NSKeyedUnarchiver.unarchiveObjectWithData(savedPeople) as! [Person]
+        }
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -45,7 +52,54 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let person = people[indexPath.item]
+        indexGlobal = indexPath
+        let alert = UIAlertController(title: "", message: "What do you want to do?", preferredStyle: .ActionSheet)
+        
+        alert.addAction(changeImage())
+        alert.addAction(renamePersonAlert())
+        alert.addAction(deleteImage())
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (action) -> Void in
+                self.indexGlobal = nil
+        }))
+        presentViewController(alert, animated: true, completion: nil)
+        
+        
+    }
+    
+    
+    func deleteImage() ->UIAlertAction {
+        return UIAlertAction(title: "Delete", style: .Default, handler: {
+            (action) -> Void in
+            self.deletePerson()
+        })
+    }
+    func renamePersonAlert () ->UIAlertAction {
+        return UIAlertAction(title: "Change Name", style: .Default, handler: {
+            (action) -> Void in
+            self.renamePerson()
+        })
+
+    }
+    
+    func deletePerson () {
+        people.removeAtIndex(indexGlobal.item)
+        indexGlobal = nil
+        self.save()
+        self.collectionView.reloadData()
+    }
+    
+    
+    func changeImage() -> UIAlertAction{
+        return UIAlertAction(title: "Change Image", style: .Default, handler: {
+            (action) -> Void in
+            self.addNewPerson();
+        })
+        
+    }
+    
+    func renamePerson (){
+        let person = people[indexGlobal.item]
         
         let alertController = UIAlertController(title: "Rename", message: nil, preferredStyle: .Alert)
         
@@ -57,9 +111,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             let newName = alertController.textFields![0]
             person.name = newName.text!
             
+            
+            self.save()
             self.collectionView.reloadData()
             
             })
+        indexGlobal = nil
         presentViewController(alertController, animated: true, completion: nil)
     }
     
@@ -96,12 +153,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             jpegData.writeToFile(imagePath,atomically : true)//"write to a temporary file first, then rename it to be the file we asked,"
         }
         
-        let person = Person(name: "Unknown", image: imageName)
-        people.append(person)
+        if(indexGlobal != nil){
+            people[indexGlobal.item].image = imageName
+            indexGlobal = nil
+        }
+        else{
+            let person = Person(name: "Unknown", image: imageName)
+            people.append(person)
+        }
         collectionView.reloadData()
         
         
         dismissViewControllerAnimated(true, completion: nil)
+        save()
         
     }
     func getDocumentsDirectory() -> NSString {
@@ -112,6 +176,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func save () {
+        let savedData = NSKeyedArchiver.archivedDataWithRootObject(people)
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(savedData, forKey: "people")
     }
 
 
